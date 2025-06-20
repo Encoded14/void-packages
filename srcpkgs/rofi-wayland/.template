@@ -1,0 +1,30 @@
+# Template file for 'rofi-wayland'
+# adapted from rofi template file
+pkgname=rofi-wayland
+version=${VERSION}
+revision=1
+build_style=meson
+hostmakedepends="flex glib-devel pkg-config"
+makedepends="libXinerama-devel librsvg-devel
+ libxkbcommon-devel pango-devel startup-notification-devel
+ xcb-util-wm-devel xcb-util-xrm-devel xcb-util-keysyms-devel xcb-util-cursor-devel
+ wayland-protocols wayland-devel"
+depends="wayland"
+short_desc="Window switcher, run dialog and dmenu replacement"
+maintainer="Encoded14 <linusken@tuta.io>"
+license="MIT"
+homepage="https://github.com/lbonn/rofi"
+changelog="${homepage}/releases"
+distfiles="${homepage}/releases/download/${version}/rofi-${version}.tar.xz"
+checksum=${SHA256}
+conflicts="rofi"
+
+if [ "$XBPS_CHECK_PKGS" ]; then
+	configure_args+=" -Dcheck=enabled"
+else
+	configure_args+=" -Dcheck=disabled"
+fi
+
+post_install() {
+	vlicense COPYING
+}
