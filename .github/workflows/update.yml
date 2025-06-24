@@ -19,7 +19,6 @@ jobs:
         fetch-depth: 0
         token: ${{ secrets.GH_TOKEN }}
     - run: sudo apt update -y && sudo apt install -y jq git curl
-    - run: bash ./srcpkgs/brave-browser/update.sh
     - run: bash ./srcpkgs/ly/update.sh
     - run: bash ./srcpkgs/rofi-wayland/update.sh
     - run: bash ./srcpkgs/zen-browser/update.sh
