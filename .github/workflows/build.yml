@@ -67,11 +67,6 @@ jobs:
             rm --force hostdir/binpkgs/*x86_64-musl*
           fi
 
-      - name: Update bootstrap packages
-        working-directory: ${{ github.workspace }}
-        run: |
-          ./xbps-src -m masterdir-${ARCH} -A ${ARCH} bootstrap-update
-
       - name: Identify changes to build
         env:
           GH_TOKEN: ${{ github.token }}
@@ -111,7 +106,7 @@ jobs:
           xbps-rindex --remove-obsoletes ${PWD}
           printf "%s\n" "${PRIVKEY}" > key.pem
           xbps-rindex --privkey key.pem --sign --signedby "${REPO_NAME}-github-actions" ${PWD}
-          xbps-rindex --privkey key.pem --sign-pkg --signedby "${REPO_NAME}-github-actions" ${PWD}/*.xbps
+          xbps-rindex --privkey key.pem --sign-pkg ${PWD}/*.xbps
           rm -f key.pem
           xbps-rindex --clean ${PWD}
 
@@ -148,4 +143,3 @@ jobs:
             ${{ github.workspace }}/hostdir/binpkgs/*.sha512sum
             ${{ github.workspace }}/hostdir/binpkgs/*.sig2
             ${{ github.workspace }}/hostdir/binpkgs/*repodata
-
